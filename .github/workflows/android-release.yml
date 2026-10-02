@@ -16,8 +16,11 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Use preinstalled Android SDK
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          ls /usr/local/lib/android/sdk
+          yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0" > /dev/null
 
       - name: Install Gradle 8.10.2
         run: |
