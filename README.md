@@ -16,6 +16,21 @@
   <img src="https://img.shields.io/badge/status-live-2e7d32?style=flat-square" alt="live">
 </p>
 
+
+## Android App
+
+<p>
+  <img src="https://img.shields.io/badge/android-1.0-3d2417?style=flat-square" alt="android v1.0">
+  <img src="https://img.shields.io/badge/minSdk-26-3d2417?style=flat-square" alt="minSdk 26">
+</p>
+
+The full native Android app lives in this repo — Kotlin + Jetpack Compose + Material3, Room database for on-device persistence, R8-minified signed release APK.
+
+- **Source:** [`app/`](app/) — the complete Android project (`com.kurupdevs.woodnest`, v1.0)
+- **APK:** grab the signed release APK from the [Releases page](../../releases)
+- **CI:** [`.github/workflows/android-release.yml`](.github/workflows/android-release.yml) builds the release APK on every manual run
+
+---
 ---
 
 ## Why WoodNest?
