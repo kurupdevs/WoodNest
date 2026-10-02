@@ -16,16 +16,22 @@ android {
         versionName = "1.0"
     }
 
+    // Release signing is optional: when keystore.properties exists (local dev machine),
+    // the release build is signed. In CI (no keystore) it builds unsigned and gets
+    // signed afterwards with apksigner.
+    val keystorePropsFile = rootProject.file("keystore.properties")
+    val hasKeystore = keystorePropsFile.exists()
+
     signingConfigs {
-        create("release") {
-            val kp = java.util.Properties()
-            val f = rootProject.file("keystore.properties")
-            if (!f.exists()) throw GradleException("keystore.properties missing at project root")
-            kp.load(f.inputStream())
-            storeFile = file(kp["storeFile"] as String)
-            storePassword = kp["storePassword"] as String
-            keyAlias = kp["keyAlias"] as String
-            keyPassword = kp["keyPassword"] as String
+        if (hasKeystore) {
+            create("release") {
+                val kp = java.util.Properties()
+                kp.load(keystorePropsFile.inputStream())
+                storeFile = file(kp["storeFile"] as String)
+                storePassword = kp["storePassword"] as String
+                keyAlias = kp["keyAlias"] as String
+                keyPassword = kp["keyPassword"] as String
+            }
         }
     }
 
@@ -34,7 +40,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = false // drawables resolved via getIdentifier must not be stripped
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
+            if (hasKeystore) signingConfig = signingConfigs.getByName("release")
         }
     }
 
