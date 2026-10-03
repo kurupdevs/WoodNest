@@ -2,6 +2,7 @@ package com.kurupdevs.woodnest
 
 import android.app.Application
 import com.kurupdevs.woodnest.data.db.AppDatabase
+import com.kurupdevs.woodnest.data.db.seedIfEmpty
 import com.kurupdevs.woodnest.data.repo.WoodNestRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
