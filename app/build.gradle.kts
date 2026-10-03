@@ -85,3 +85,17 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
 }
+
+// CI fix: the "WoodNest Release APK" workflow uploads
+// app/build/outputs/apk/release/app-release.apk, but an unsigned release
+// build is emitted as app-release-unsigned.apk. Copy it to the expected name.
+tasks.named("assembleRelease") {
+    doLast {
+        val outDir = layout.buildDirectory.dir("outputs/apk/release").get().asFile
+        val unsigned = outDir.resolve("app-release-unsigned.apk")
+        val expected = outDir.resolve("app-release.apk")
+        if (unsigned.exists() && !expected.exists()) {
+            unsigned.copyTo(expected)
+        }
+    }
+}
