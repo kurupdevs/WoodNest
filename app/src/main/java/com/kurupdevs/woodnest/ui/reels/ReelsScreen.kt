@@ -1,6 +1,7 @@
 package com.kurupdevs.woodnest.ui.reels
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -169,7 +170,7 @@ private fun ReelPage(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    reel.productIds.forEach { pid ->
+                    for (pid in reel.productIds) {
                         AssistChip(
                             onClick = { onAddToCart(pid) },
                             label = {
@@ -184,9 +185,7 @@ private fun ReelPage(
                             colors = AssistChipDefaults.assistChipColors(
                                 containerColor = Color.White.copy(alpha = 0.18f)
                             ),
-                            border = AssistChipDefaults.assistChipBorder(
-                                borderColor = Color.White.copy(alpha = 0.5f)
-                            )
+                            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.5f))
                         )
                     }
                 }
