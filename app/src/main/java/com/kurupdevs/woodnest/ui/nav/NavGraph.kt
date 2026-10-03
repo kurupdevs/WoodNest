@@ -14,6 +14,7 @@ import com.kurupdevs.woodnest.ui.detail.ProductDetailScreen
 import com.kurupdevs.woodnest.ui.favorites.FavoritesScreen
 import com.kurupdevs.woodnest.ui.home.HomeScreen
 import com.kurupdevs.woodnest.ui.offers.OffersScreen
+import com.kurupdevs.woodnest.ui.orders.OrderDetailScreen
 import com.kurupdevs.woodnest.ui.orders.OrdersScreen
 import com.kurupdevs.woodnest.ui.profile.AddressesScreen
 import com.kurupdevs.woodnest.ui.profile.LoyaltyScreen
