@@ -121,7 +121,7 @@ fun FavoritesScreen(navController: NavController, repo: WoodNestRepository) {
                                     color = WarmGrey
                                 )
                                 Switch(
-                                    checked = favorite.alert,
+                                    checked = favorite.alertsOn,
                                     onCheckedChange = { on ->
                                         scope.launch { repo.setAlert(product.id, on) }
                                     },
