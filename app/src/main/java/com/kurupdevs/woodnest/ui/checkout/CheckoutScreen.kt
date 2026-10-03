@@ -209,7 +209,8 @@ fun CheckoutScreen(navController: NavController, repo: WoodNestRepository) {
                                                 line2 = fLine2.trim(),
                                                 city = fCity.trim(),
                                                 state = fState.trim(),
-                                                pincode = fPin.trim()
+                                                pincode = fPin.trim(),
+                                                isDefault = true
                                             )
                                         )
                                         repo.setDefaultAddress(id)
@@ -419,9 +420,9 @@ fun CheckoutScreen(navController: NavController, repo: WoodNestRepository) {
                     singleLine = true,
                     shape = RoundedCornerShape(12.dp)
                 )
-                if (bill.promoError.isNotBlank()) {
+                if (!bill.promoError.isNullOrBlank()) {
                     Spacer(Modifier.height(4.dp))
-                    Text(bill.promoError, fontFamily = Inter, color = SaleRed, style = MaterialTheme.typography.bodySmall)
+                    Text(bill.promoError.orEmpty(), fontFamily = Inter, color = SaleRed, style = MaterialTheme.typography.bodySmall)
                 }
             }
 
@@ -474,6 +475,10 @@ fun CheckoutScreen(navController: NavController, repo: WoodNestRepository) {
                             } else null
                             val oid = repo.placeOrder(
                                 com.kurupdevs.woodnest.data.repo.WoodNestRepository.OrderInput(
+                                    addressId = address?.id ?: 0L,
+                                    slot = slot,
+                                    promisedAt = (estimate as? DeliveryEstimate.Serviceable)?.promisedAt
+                                        ?: (System.currentTimeMillis() + 7 * DAY_MS),
                                     promoCode = promo,
                                     useLoyalty = useLoyalty,
                                     loyaltyPointsUsed = bill.loyaltyPointsUsed,
