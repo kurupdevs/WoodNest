@@ -105,7 +105,7 @@ class WoodNestRepository(private val db: AppDatabase, private val context: Conte
     }
 
     fun addressesFlow() = db.addressDao().all()
-    fun defaultAddressFlow() = db.addressDao().default()
+    fun defaultAddressFlow() = db.addressDao().defaultAddress()
     suspend fun defaultAddressOnce() = db.addressDao().defaultOnce()
 
     suspend fun upsertAddress(a: Address): Long =
