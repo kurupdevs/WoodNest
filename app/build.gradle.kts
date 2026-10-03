@@ -91,14 +91,15 @@ dependencies {
 // build is emitted as app-release-unsigned.apk. Copy it to the expected name
 // right after assembleRelease so the upload step finds it. (Plain Gradle
 // task API only: AGP 8's VariantOutput interface has no outputFileName
-// property, and tasks.named() is lazy so it works even though AGP creates
-// assembleRelease after this script is evaluated.)
+// property. assembleRelease is created by AGP after this script is
+// evaluated, so hook it in afterEvaluate; tasks.named() would throw
+// UnknownTaskException at configuration time.)
 val copyUnsignedApk by tasks.registering(Copy::class) {
     from(layout.buildDirectory.file("outputs/apk/release/app-release-unsigned.apk"))
     into(layout.buildDirectory.dir("outputs/apk/release"))
     rename { "app-release.apk" }
 }
 
-tasks.named("assembleRelease") {
-    finalizedBy(copyUnsignedApk)
+afterEvaluate {
+    tasks.findByName("assembleRelease")?.finalizedBy(copyUnsignedApk)
 }
