@@ -146,7 +146,7 @@ fun ProductDetailScreen(navController: NavController, repo: WoodNestRepository, 
                         .padding(16.dp)
                 ) {
                     Image(
-                        painter = productPainter(p),
+                        painter = productPainter(p.imageName),
                         contentDescription = p.name,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -400,7 +400,7 @@ fun ProductDetailScreen(navController: NavController, repo: WoodNestRepository, 
                     ) {
                         Column(Modifier.padding(14.dp)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                RatingStars(rating = review.stars.toDouble())
+                                RatingStars(rating = review.stars.toFloat())
                                 Spacer(Modifier.size(8.dp))
                                 Text(review.userName, fontFamily = Inter, fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.bodySmall)
                                 if (review.verified) {
