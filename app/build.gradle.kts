@@ -18,19 +18,28 @@ android {
 
     // Release signing is optional: when keystore.properties exists (local dev machine),
     // the release build is signed. In CI (no keystore) it builds unsigned and gets
-    // signed afterwards with apksigner.
-    val keystorePropsFile = rootProject.file("keystore.properties")
-    val hasKeystore = keystorePropsFile.exists()
+    // signed afterwards with apksigner. (Pure-Kotlin parse: java.* is not
+    // resolvable inside the android{} DSL scope.)
+    val keystoreProps: Map<String, String> = run {
+        val f = rootProject.file("keystore.properties")
+        if (!f.exists()) emptyMap()
+        else f.readLines()
+            .map { it.trim() }
+            .filter { it.isNotEmpty() && !it.startsWith("#") && "=" in it }
+            .associate { line ->
+                val idx = line.indexOf("=")
+                line.substring(0, idx).trim() to line.substring(idx + 1).trim()
+            }
+    }
+    val hasKeystore = keystoreProps.isNotEmpty()
 
     signingConfigs {
         if (hasKeystore) {
             create("release") {
-                val kp = java.util.Properties()
-                kp.load(keystorePropsFile.inputStream())
-                storeFile = file(kp["storeFile"] as String)
-                storePassword = kp["storePassword"] as String
-                keyAlias = kp["keyAlias"] as String
-                keyPassword = kp["keyPassword"] as String
+                storeFile = file(keystoreProps.getValue("storeFile"))
+                storePassword = keystoreProps.getValue("storePassword")
+                keyAlias = keystoreProps.getValue("keyAlias")
+                keyPassword = keystoreProps.getValue("keyPassword")
             }
         }
     }
