@@ -88,18 +88,14 @@ dependencies {
 
 // CI fix: the "WoodNest Release APK" workflow uploads
 // app/build/outputs/apk/release/app-release.apk, but an unsigned release
-// build is emitted as app-release-unsigned.apk. Copy it to the expected name.
-// (afterEvaluate: AGP only creates the assembleRelease task after the
-// android{} block is processed, so referencing it earlier fails the build.)
-afterEvaluate {
-    tasks.named("assembleRelease") {
-        doLast {
-            val outDir = layout.buildDirectory.dir("outputs/apk/release").get().asFile
-            val unsigned = outDir.resolve("app-release-unsigned.apk")
-            val expected = outDir.resolve("app-release.apk")
-            if (unsigned.exists() && !expected.exists()) {
-                unsigned.copyTo(expected)
-            }
+// build is emitted as app-release-unsigned.apk. Rename the release output
+// so the upload step finds it. (androidComponents.onVariants is AGP's
+// sanctioned hook: referencing the assembleRelease task by name fails
+// because AGP has not created it when the build script is evaluated.)
+androidComponents {
+    onVariants(selector().withBuildType("release")) { variant ->
+        variant.outputs.forEach { output ->
+            output.outputFileName.set("app-release.apk")
         }
     }
 }
