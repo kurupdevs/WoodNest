@@ -49,7 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.kurupdevs.woodnest.data.db.UserProfile
+import com.kurupdevs.woodnest.data.repo.WoodNestRepository.UserProfile
 import com.kurupdevs.woodnest.data.repo.WoodNestRepository
 import com.kurupdevs.woodnest.ui.components.PrimaryButton
 import com.kurupdevs.woodnest.ui.components.SectionTitle
