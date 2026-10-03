@@ -52,8 +52,8 @@ class MainActivity : ComponentActivity() {
                     Triple(Routes.PROFILE, "Profile", Icons.Filled.Person)
                 )
                 val showBar = tabs.any { it.first == route }
-                val cartCount by app.repo.cartLines().collectAsStateWithLifecycle(initial = emptyList())
-                val drops by app.repo.dropCount().collectAsStateWithLifecycle(initial = 0)
+                val cartCount by app.repo.cartLines().collectAsStateWithLifecycle(initialValue = emptyList())
+                val drops by app.repo.dropCount().collectAsStateWithLifecycle(initialValue = 0)
                 Scaffold(
                     bottomBar = {
                         if (showBar) {
