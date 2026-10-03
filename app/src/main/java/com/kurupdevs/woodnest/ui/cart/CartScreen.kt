@@ -131,7 +131,7 @@ fun CartScreen(navController: NavController, repo: WoodNestRepository) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
-                            painter = productPainter(line.product),
+                            painter = productPainter(line.product.imageName),
                             contentDescription = line.product.name,
                             modifier = Modifier
                                 .size(72.dp)
@@ -237,9 +237,9 @@ fun CartScreen(navController: NavController, repo: WoodNestRepository) {
                         Text("Apply", fontFamily = Inter, fontWeight = FontWeight.Bold, color = CoffeeBrown)
                     }
                 }
-                if (bill.promoError.isNotBlank()) {
+                if (!bill.promoError.isNullOrBlank()) {
                     Spacer(Modifier.height(4.dp))
-                    Text(bill.promoError, fontFamily = Inter, color = SaleRed, style = MaterialTheme.typography.bodySmall)
+                    Text(bill.promoError.orEmpty(), fontFamily = Inter, color = SaleRed, style = MaterialTheme.typography.bodySmall)
                 } else if (bill.promoDiscount > 0) {
                     Spacer(Modifier.height(4.dp))
                     Text(
