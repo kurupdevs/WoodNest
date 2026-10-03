@@ -88,7 +88,7 @@ interface AddressDao {
     fun all(): Flow<List<Address>>
 
     @Query("SELECT * FROM addresses WHERE isDefault=1 LIMIT 1")
-    fun default(): Flow<Address?>
+    fun defaultAddress(): Flow<Address?>
 
     @Query("SELECT * FROM addresses WHERE isDefault=1 LIMIT 1")
     suspend fun defaultOnce(): Address?
